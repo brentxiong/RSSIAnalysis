@@ -48,12 +48,13 @@ class Analyzer():
         self.user = conf.get('database','user')
         self.passwd = conf.get('database','passwd')
         self.db = conf.get('database','db')
-        
+        self.tx_sql = conf.get('sql','tx_sql')
+        self.rx_sql = conf.get('sql','rx_sql')
     def closedb(self):
         self.db.close()
         
-    def get_rx_result(self, macaddr='2021282952'):
-        sql = "select rssi_2, rssi_3, rssi_4, rssi_1, evm_1 from dat_Assy_dp_dut where job_id = (select max(job_id) from mfgtest.JobIdTbl where sn_product = '{}' and station like 'Assy%')".format(macaddr)
+    def get_rx_result(self, macaddr=''):
+        sql = self.rx_sql.format(macaddr)
         try:
             #get all data
             self.cursor.execute(sql)
@@ -75,8 +76,8 @@ class Analyzer():
         
         except:
             print "Error: unable to fetch data"    
-    def get_tx_result(self, macaddr='2021282952', row=0):
-        sql = "select rssi_1, rssi_2, evm_1 from dat_Assy_dp_gold where job_id = (select max(job_id) from mfgtest.JobIdTbl where sn_product = '{}' and station like 'Assy%')".format(macaddr)
+    def get_tx_result(self, macaddr='', row=0):
+        sql = self.tx_sql.format(macaddr)
         try:
             #get all data
             self.cursor.execute(sql)
@@ -223,7 +224,7 @@ if __name__ == '__main__':
     c_2_tx.plot(result_bad['TX CHAIN {}'.format(index + 2)]['RSSI'], result_bad['TX CHAIN {}'.format(index + 2)]['EVM'], 'r2', color='r')
     c_2_tx.legend(('Good','Bad'),loc='upper right', fancybox=True, shadow=True)
     
-    fig.suptitle("A5-18 SLT_L30")
+    fig.suptitle("Demo")
     plt.tight_layout()
     plt.show()
 
