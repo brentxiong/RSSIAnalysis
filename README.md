@@ -1,0 +1,19 @@
+# RSSIAnalysis
+configuration files:
+* db.conf 
+  - [database]
+    - dbhost=
+    - user=
+    - passwd=
+    - db=
+  - [sql]
+    - tx_sql=
+    - rx_sql=
+* goodsn
+  - xxxxxxxxxx
+  - xxxxxxxxxx
+  - ...
+* badsn
+  - xxxxxxxxxx
+  - xxxxxxxxxx
+  - ...
